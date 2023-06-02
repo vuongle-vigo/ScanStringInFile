@@ -53,7 +53,7 @@ DWORD WINAPI ThreadProcScanFolder(LPVOID);
 void FindFileInFolder(LPWSTR);
 DWORD WINAPI ThreadProcFindStringInFile(LPVOID);
 void FindStringInFile(LPWSTR);
-void KMPSearch(const char*, DWORD, const char*, LPWSTR);
+void KMPSearch(const unsigned char*, DWORD, const char*, LPWSTR);
 void StopButtonHandle();
 
 // Entry point of the application
@@ -398,7 +398,7 @@ void FindStringInFile(LPWSTR lpPath) {
 		if (hMapping != NULL)
 		{
 			// Map the file into memory for efficient access
-			const char* data = static_cast<const char*>(MapViewOfFile(hMapping, FILE_MAP_READ, 0, 0, 0));
+			const unsigned char* data = static_cast<const unsigned char*>(MapViewOfFile(hMapping, FILE_MAP_READ, 0, 0, 0));
 			if (data != NULL)
 			{
 				// Get the text to search from a text box (assuming g_hWndEdtStringBox is a valid handle)
@@ -456,17 +456,12 @@ vector<int> createLPSArray(const char* pattern, int patternLength) {
 //			const char* pattern: text search
 // Return: N/A
 //-------------------------------------------------------------------------------------------------------------
-void KMPSearch(const char* text, DWORD dataLenght,const char* pattern, LPWSTR lpPath) {
-	char* byDataCopy = new char[dataLenght + 1];
-	memcpy(byDataCopy, text, dataLenght);
-	byDataCopy[dataLenght] = '\0';
-	int textLength = (int)strlen(byDataCopy);
-	delete[] byDataCopy;
+void KMPSearch(const unsigned char* text, DWORD dataLenght,const char* pattern, LPWSTR lpPath) {
 	int patternLength = (int)strlen(pattern);
 	vector<int> lps = createLPSArray(pattern, patternLength);
 	int i = 0;
 	int j = 0;
-	while (i < textLength) {
+	while (i < dataLenght) {
 		if (pattern[j] == text[i]) {
 			i++;
 			j++;
@@ -511,7 +506,7 @@ void KMPSearch(const char* text, DWORD dataLenght,const char* pattern, LPWSTR lp
 
 			j = lps[j - 1];
 		}
-		else if (i < textLength && pattern[j] != text[i]) {
+		else if (i < dataLenght && pattern[j] != text[i]) {
 			if (j != 0) {
 				j = lps[j - 1];
 			}

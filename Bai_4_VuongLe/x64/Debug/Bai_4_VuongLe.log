@@ -1,2 +1,4 @@
 ﻿  Bai_4_VuongLe.cpp
-  Bai_4_VuongLe.vcxproj -> C:\Users\Admin\source\repos\Bai_4_VuongLe\x64\Debug\Bai_4_VuongLe.exe
+D:\Git Project\ScanStringInFile\Bai_4_VuongLe\Bai_4_VuongLe.cpp(464,11): warning C4018: '<': signed/unsigned mismatch
+D:\Git Project\ScanStringInFile\Bai_4_VuongLe\Bai_4_VuongLe.cpp(509,14): warning C4018: '<': signed/unsigned mismatch
+  Bai_4_VuongLe.vcxproj -> D:\Git Project\ScanStringInFile\x64\Debug\Bai_4_VuongLe.exe
